@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import WordleBoard from '../WordleBoard.vue'
-import {VICTORY_MESSAGE, ERROR_MESSAGE} from '../../settings'
+import {VICTORY_MESSAGE, ERROR_MESSAGE, WARNING_MESSAGE} from '../../settings'
 
 describe('WordleBoard', () => {
   let wordOfTheDay = "TESTS"
@@ -27,6 +27,10 @@ describe('WordleBoard', () => {
   test("no end-of-game message appears if user has not yet made a guess", async () => {
     expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
     expect(wrapper.text()).not.toContain(ERROR_MESSAGE)
-
+  })
+  test("if a word of the day guess does not have 5 characters, a warning is emitted", async () => {
+    vi.spyOn(console, "warn")
+    mount(WordleBoard, {props: {wordOftheDay: "PINT"}})
+    expect(console.warn).toHaveBeenCalled()
   })
 })
