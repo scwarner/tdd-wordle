@@ -3,5 +3,5 @@ import WordleBoard from './components/WordleBoard.vue';
 </script>
 
 <template>
-  <WordleBoard msg="You did it!" />
+  <wordle-board word-of-the-day="You won!" />
 </template>
