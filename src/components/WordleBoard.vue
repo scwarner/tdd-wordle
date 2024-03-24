@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { VICTORY_MESSAGE, ERROR_MESSAGE } from '@/settings';
+import englishWords from "@/englishWordsWith5Letters.json"
 import { ref } from 'vue';
 
 defineProps({ 
   wordOfTheDay: {
   type: String,
-  validator: (wordGiven: string) => wordGiven.length === 5 && wordGiven.toUpperCase() === wordGiven
+  validator: (wordGiven: string) => wordGiven.length === 5 
+    && wordGiven.toUpperCase() === wordGiven 
+    && englishWords.includes(wordGiven)
   }
 })
 const guessInProgress = ref("")
@@ -13,7 +16,7 @@ const guessSubmitted = ref("")
 </script>
 
 <template>
-  <input type="text" v-model="guessInProgress" @keydown.enter="guessSubmitted = guessInProgress">
+  <input v-model="guessInProgress" type="text" @keydown.enter="guessSubmitted = guessInProgress">
   <p v-if="guessSubmitted.length > 0"
     v-text="guessSubmitted === wordOfTheDay ? VICTORY_MESSAGE : ERROR_MESSAGE"/>
 </template>
