@@ -29,8 +29,7 @@ describe('WordleBoard', () => {
     expect(wrapper.text()).not.toContain(ERROR_MESSAGE)
   })
   test("if a word of the day guess does not have 5 characters, a warning is emitted", async () => {
-    const spy = vi.spyOn(console, "warn")
-    spy.mockImplementation(() => null);
+    console.warn = vi.fn()
     mount(WordleBoard, {props: {wordOftheDay: "PINT"}})
     expect(console.warn).toHaveBeenCalled()
   })
