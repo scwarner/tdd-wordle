@@ -28,9 +28,14 @@ describe('WordleBoard', () => {
     expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
     expect(wrapper.text()).not.toContain(ERROR_MESSAGE)
   })
-  test("if a word of the day guess does not have 5 characters, a warning is emitted", async () => {
+  test("if a word of the day does not have 5 characters, a warning is emitted", async () => {
     console.warn = vi.fn()
     mount(WordleBoard, {props: {wordOftheDay: "PINT"}})
+    expect(console.warn).toHaveBeenCalled()
+  })
+  test("if a word of the day is not in all uppercase, a warning is emitted", async () => {
+    console.warn = vi.fn()
+    mount(WordleBoard, {props: {wordOftheDay: "Crane"}})
     expect(console.warn).toHaveBeenCalled()
   })
 })
