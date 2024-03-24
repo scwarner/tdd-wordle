@@ -31,24 +31,17 @@ describe('WordleBoard', () => {
     })
   })
   describe('Rules for defining word of the day', () => {
-    test("if a word of the day does not have 5 characters, a warning is emitted", async () => {
+    test.each(
+      [
+        "PINT",
+        "Crane",
+        "ASDFE",
+      ]
+    )
+    ("if '%s' is provided, a warning is emitted", async (wordOfTheDay) => {
       console.warn = vi.fn()
   
-      mount(WordleBoard, {props: {wordOfTheDay: "PINT"}})
-  
-      expect(console.warn).toHaveBeenCalled()
-    })
-    test("if a word of the day is not in all uppercase, a warning is emitted", async () => {
-      console.warn = vi.fn()
-      
-      mount(WordleBoard, {props: {wordOfTheDay: "Crane"}})
-  
-      expect(console.warn).toHaveBeenCalled()
-    })
-    test("if a word of the day is not a real word, a warning is emitted", async () => {
-      console.warn = vi.fn()
-  
-      mount(WordleBoard, {props: {wordOfTheDay: "ASDFE"}})
+      mount(WordleBoard, {props: {wordOfTheDay}})
   
       expect(console.warn).toHaveBeenCalled()
     })
