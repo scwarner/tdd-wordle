@@ -46,14 +46,21 @@ describe('WordleBoard', () => {
   
       expect(console.warn).toHaveBeenCalled()
     })
-    test("no warning is emitted if a word of the day meets all of the validation rules",async () => {
+    test("no warning is emitted if a word of the day meets all of the validation rules", async () => {
       mount(WordleBoard, {props: {wordOfTheDay: "TESTS"}})
   
       expect(console.warn).not.toHaveBeenCalled()
     })
   })
   describe('Rules for player inputs', () => {
-    test.todo("player guesses are limited to 5 letters", () => {
+    test("player guesses are limited to 5 letters", async () => {
+      await playerSubmitsGuess(wordOfTheDay + "EXTRA")
+      expect(wrapper.text()).toContain(VICTORY_MESSAGE)
+    })
+    test("player guess can only be submitted if they are real words", async () => {
+      await playerSubmitsGuess("VIZZZ")
+      expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
+      expect(wrapper.text()).not.toContain(ERROR_MESSAGE)
     })
   })
 })
